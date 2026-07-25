@@ -16,5 +16,5 @@ async function startSrver(){
 startSrver();
 const PORT = 8001;
 app.listen(PORT, () => {
-  console.log(`server port ${PORT}`);
+  console.log(`server port http://localhost:${PORT}`);
 });
