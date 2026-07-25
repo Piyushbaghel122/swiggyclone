@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
-import express, { 
-    type Request, 
-    type Response, 
-    type NextFunction 
-} from "express";
-import jwt from "jsonwebtoken";
+
 
 // 1. Blacklist Token Schema Model (TypeScript/Mongoose)
 const blacklistTokenSchema = new mongoose.Schema({

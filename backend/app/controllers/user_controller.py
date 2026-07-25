@@ -132,7 +132,7 @@ def change_password():
 
 
 def send_email_background(email: str, reset_token: str):
-    reset_link = f"http://localhost:3000/changepasword?token={reset_token}"
+    reset_link = f"https://swiggyclone-6j9v.vercel.app/"
     print(f"--- EMAIL SIMULATION ---")
     print(f"To: {email}")
     print(f"Subject: Password Reset Request")
