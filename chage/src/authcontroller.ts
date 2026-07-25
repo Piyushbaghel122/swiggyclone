@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import redis from "./redis";
 import {type Request ,type Response } from "express";
+import mongoose from "mongoose";
 
 export async function changepassword(req: Request, res: Response) {
     try {
@@ -18,7 +19,7 @@ export async function changepassword(req: Request, res: Response) {
 
         // 4. Find and update the existing user document in MongoDB (or create if no id provided during testing)
         let user;
-        if (id) {
+        if (id && mongoose.Types.ObjectId.isValid(id)) {
             user = await changepasswordModel.findByIdAndUpdate(
                 id,
                 { newpassword, confirmpassword },

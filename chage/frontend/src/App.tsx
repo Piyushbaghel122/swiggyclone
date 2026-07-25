@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Lock, Eye, EyeOff, KeyRound } from "lucide-react";
 import "./App.css";
-import useAuth from "./hook";
 
 export default function NewPasswordAndConfirmPassword() {
   const [newpassword, setNewPassword] = useState("");
@@ -14,7 +13,6 @@ export default function NewPasswordAndConfirmPassword() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { handlenewpassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

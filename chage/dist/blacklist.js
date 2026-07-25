@@ -1,5 +1,5 @@
 import Redis from "ioredis";
-import prisma from "./prisma";
+import { BlacklistTokenModel } from "./blacklisttokenModel";
 const redis = new Redis("redis://localhost:6379");
 export async function addblacklist(reqOrToken, res) {
     try {
@@ -18,12 +18,10 @@ export async function addblacklist(reqOrToken, res) {
         }
         // Add to Redis with a 24-hour expiration
         await redis.set(`blacklist:${token}`, "true", "EX", 24 * 60 * 60);
-        // Add to MySQL DB via Prisma if not already present
-        const exists = await prisma.blacklist.findUnique({ where: { token } });
+        // Add to MongoDB via Mongoose if not already present
+        const exists = await BlacklistTokenModel.findOne({ token });
         if (!exists) {
-            await prisma.blacklist.create({
-                data: { token }
-            });
+            await BlacklistTokenModel.create({ token });
         }
         if (res) {
             res.clearCookie("token");
@@ -43,7 +41,7 @@ export async function isBlacklisted(token) {
     const redisCheck = await redis.get(`blacklist:${token}`);
     if (redisCheck === "true")
         return true;
-    const dbCheck = await prisma.blacklist.findUnique({ where: { token } });
+    const dbCheck = await BlacklistTokenModel.findOne({ token });
     if (dbCheck) {
         await redis.set(`blacklist:${token}`, "true", "EX", 24 * 60 * 60);
         return true;

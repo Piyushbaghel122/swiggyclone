@@ -1,5 +1,5 @@
 import Redis from "ioredis";
-const redis = new Redis("redis://localhost:6379");
+const redis = new Redis("redis://localhost:6379", { lazyConnect: true });
 redis.on("connect", () => {
     console.log("Connected to Redis");
 });

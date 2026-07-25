@@ -1,7 +1,7 @@
 import { changepasswordModel } from "./changeModel";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import redis from "./redis";
+import mongoose from "mongoose";
 export async function changepassword(req, res) {
     try {
         // 1. Get inputs (extract user id/identifier from params, body, or authenticated user request object)
@@ -10,13 +10,14 @@ export async function changepassword(req, res) {
         if (!newpassword || !confirmpassword) {
             return res.status(400).json({ success: false, message: "Please provide both new and confirm passwords" });
         }
-        // 3. Hash the password securely using bcrypt
-        const hashedPassword = await bcrypt.hash(newpassword, 10);
-        // 4. Find and update the existing user document in MongoDB
-        const user = await changepasswordModel.findByIdAndUpdate(id, {
-            newpassword: hashedPassword,
-            confirmpassword: hashedPassword
-        }, { new: true });
+        // 4. Find and update the existing user document in MongoDB (or create if no id provided during testing)
+        let user;
+        if (id && mongoose.Types.ObjectId.isValid(id)) {
+            user = await changepasswordModel.findByIdAndUpdate(id, { newpassword, confirmpassword }, { returnDocument: "after" });
+        }
+        else {
+            user = await changepasswordModel.create({ newpassword, confirmpassword });
+        }
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
