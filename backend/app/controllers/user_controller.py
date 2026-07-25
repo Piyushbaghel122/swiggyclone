@@ -131,32 +131,44 @@ def change_password():
     return {"message": "Change password endpoint not implemented yet"}
 
 
-def sendlink(data: sendLinkSchema, respons: Response, db: Session = Depends(get_db)):
-    user = db.query(sendLink).filter(sendLink.email == data.email).first()
-
-    if user: 
-        raise HTTPException(
-            status_code=404,
-            detail="User not found"
-        )
-
-    SendLink = sendLink(
-        email=data.email,
-    )
-
-    db.add(SendLink)
-    db.commit()
-    db.refresh(SendLink)
-
-    return {"message": "Send link endpoint not implemented yet"}
-
-def send_email_background(email: str , reset_token:str):
-    reset_link = f"http://localhost:3000/reset-password?token={reset_token}"
+def send_email_background(email: str, reset_token: str):
+    reset_link = f"http://localhost:3000/changepasword?token={reset_token}"
     print(f"--- EMAIL SIMULATION ---")
     print(f"To: {email}")
     print(f"Subject: Password Reset Request")
     print(f"Click the link to reset your password: {reset_link}")
     print(f"------------------------")
 
-@app.post("/sendlink")
+
+def sendlink(data: sendLinkSchema, response: Response, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == data.email).first()
+
+    if not user: 
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    reset_token = secrets.token_urlsafe(32)
+
+    # Check if a reset link already exists for this email to prevent unique constraint violations
+    existing_link = db.query(sendLink).filter(sendLink.email == data.email).first()
+    if existing_link:
+        existing_link.sendLink = reset_token
+        SendLink_obj = existing_link
+    else:
+        SendLink_obj = sendLink(
+            email=data.email,
+            sendLink=reset_token
+        )
+        db.add(SendLink_obj)
+
+    db.commit()
+    db.refresh(SendLink_obj)
+
+    # Schedule sending the email in the background
+    background_tasks.add_task(send_email_background, data.email, reset_token)
+
+    return {"message": "Password reset link sent successfully"}
+
 

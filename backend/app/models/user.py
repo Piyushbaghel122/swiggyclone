@@ -13,9 +13,11 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-class sendLink(Base): 
-    id: Column(Integer , primary_key=True , index= True)
-    email: Column(String , index=True , unique=True , nullable=False)
-    sendLink: Column(String , nullable=False)   
-    created_at: Column(DateTime(timezone=True), server_default=func.now())
-    updated_at: Column(DateTime(timezone=True), onupdate=func.now())    
+class sendLink(Base):
+    __tablename__ = "send_links"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, index=True, unique=True, nullable=False)
+    sendLink = Column(String, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())    
