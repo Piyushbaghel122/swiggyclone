@@ -1,0 +1,115 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Send OTP",
+    "contact": {},
+    "version": "1.0"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "servers": [
+    {
+      "url": "https://uat-partner.payu.in//api/v1/otps",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/send_otp": {
+      "post": {
+        "tags": [
+          "Misc"
+        ],
+        "summary": "send_otp",
+        "operationId": "send_otp",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "const": "application/x-www-form-urlencoded",
+              "type": "string",
+              "examples": [
+                "application/x-www-form-urlencoded"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "encoding": {},
+              "schema": {
+                "required": [
+                  "otp[identity]",
+                  "otp[scope]",
+                  "otp[channels][]",
+                  "otp[type]"
+                ],
+                "type": "object",
+                "properties": {
+                  "otp[identity]": {
+                    "type": "string",
+                    "description": "Indicates the entity on which the OTP is to be sent. For example, Phone Number"
+                  },
+                  "otp[scope]": {
+                    "type": "string",
+                    "description": "Indicates the purpose of the API. For more details, refer to Additional Info table.",
+                    "examples": [
+                      "create_payment_links update_payment_links read_payment_links"
+                    ]
+                  },
+                  "otp[channels][]": {
+                    "type": "string",
+                    "description": "Indicates the way or medium through which the OTP should be sent the merchant",
+                    "examples": [
+                      "sms"
+                    ]
+                  },
+                  "otp[type]": {
+                    "type": "string",
+                    "description": "ndicates the type of OTP you want to receive depending upon the action to be performed.",
+                    "examples": [
+                      "SignIn"
+                    ]
+                  }
+                },
+                "contentMediaType": "application/x-www-form-urlencoded"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "httpBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "httpBearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/api@7/schema.json",
+  "apis": [
+    {
+      "private": true,
+      "identifier": "payu-hosted-checkout",
+      "source": "@payu-hosted-checkout/v1#8mfp91pklmfw6xbx",
+      "integrity": "sha512-s+BS7MJeC6q3PdiQtq0nm2lb6KSJfHJG65P4grb3Y1wVpS7DVjjozct6uNYVa9055Hk16BNGUDdSp50JXngM9A==",
+      "installerVersion": "7.0.0",
+      "language": "js",
+      "createdAt": "2026-08-02T10:58:47.607Z"
+    }
+  ]
+}
