@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Asus/OneDrive/Desktop/swiggy/ride/ride_frontend/app/features/ride/pages/PartneerReastaurant.tsx"],"sourcesContent":["export default function PartnerRestaurant() {\r\n  return (\r\n    <div>\r\n      <h1>Partner Restaurant</h1>\r\n    </div>\r\n  );\r\n}\n"],"names":["PartnerRestaurant"],"mappings":";;;;;;AAAe,SAASA;IACtB,qBACE,8OAAC;kBACC,cAAA,8OAAC;sBAAG;;;;;;;;;;;AAGV"}}]
+}
