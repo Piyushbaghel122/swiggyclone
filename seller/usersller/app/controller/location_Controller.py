@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException , Depends
 from app.models.loction_models import LocationDB , ReastaurantLocation
 from app.schemas.location_schemas import LocationCreate, LocationUpdate, LocationResponse ,  RestaurantLocationCreate 
-from typing import List
+from typing import List 
 
 from app.core.database import get_db
 
@@ -55,4 +55,22 @@ def delete_location(db: Session, location_id: int, user_id: int):
     return {"success": True, "message": "Location deleted"}
 
 def create_restaurant_location(location:RestaurantLocationCreate, restaurant_id: str, db: Session = Depends(get_db)):
-   existUser = db.query(ReastuarantLocation).filter(ReastaurantLocation.)
+    existUser = db.query(ReastaurantLocation).filter(ReastaurantLocation.restaurant_id == restaurant_id).first()
+    if existUser:
+        raise HTTPException(status_code=400, detail="Location already exists")
+    
+    db_location = ReastaurantLocation(
+        restaurant_id=restaurant_id,
+        address=location.address,
+        city=location.city,
+        state=location.state,
+        country=location.country,
+        postal_code=location.postal_code,
+        latitude=location.latitude,
+        longitude=location.longitude,
+        delivery_radius=location.delivery_radius
+    )
+    db.add(db_location)
+    db.commit()
+    db.refresh(db_location)
+    return db_location
