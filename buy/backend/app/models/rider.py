@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String , Float , DateTime
 from app.core.database import Base
+from sqlalchemy.sql import func , DateTime
+
 
 class Rider(Base):
     __tablename__ = "riders"

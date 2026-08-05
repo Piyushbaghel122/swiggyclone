@@ -1,7 +1,7 @@
 from fastapi import HTTEXception , Exception , Resposne 
 from app.core.database import Base
 from app.core.redis import redis_client
-
+from app.services.rider_order_service import  RidersOrderServoices
 
 import jwt 
 from os import getenv 
@@ -74,4 +74,23 @@ def make_rider_offline(rider_id: int, db: Session):
     repo.save(db, rider)
     return rider
 
-class 
+
+
+class RiderOrderController():
+
+    @staticmethod
+    def accpet_order(order_id:int , db:Session):
+        return RidersOrderServices.accept_order(order_id, db)
+
+    @staticmethod
+    def reject_order(order_id: int,reason: str,db: Session):
+        return RidersOrderServices.reject_order( order_id, reason,db)
+
+
+    @staticmethod 
+    def cancel_order(order_id:int ,reason: str , db:Session):
+        return RidersOrderServices.cancel_order(order_id ,reason , db)
+
+    @staticmethod
+    def pending_order(order_id:int , db:Session):
+        return RidersOrderServices.pending_order(order_id , db)
