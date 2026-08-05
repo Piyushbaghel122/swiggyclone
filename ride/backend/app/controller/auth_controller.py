@@ -10,7 +10,6 @@ from bcrypt import hashpw, gensalt
 import uuid
 from twilio.rest import Client 
 
-
 load_dotenv()
 
 account_sid= getenv("TWILIO_ACCOUNT_SID")

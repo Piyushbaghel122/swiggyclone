@@ -14,3 +14,4 @@ def auth_router():
     router.add_api_route("/sendOtp", send_otp, methods=["POST"])
     router.add_api_route("/verifyOtp", verify_otp, methods=["POST"])
     return router
+    
