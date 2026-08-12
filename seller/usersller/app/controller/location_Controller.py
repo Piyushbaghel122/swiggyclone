@@ -74,3 +74,11 @@ def create_restaurant_location(location:RestaurantLocationCreate, restaurant_id:
     db.commit()
     db.refresh(db_location)
     return db_location
+
+
+def get_reastaurant_location(restaurant_id: str, db: Session = Depends(get_db)):
+    location = db.query(ReastaurantLocation).filter(ReastaurantLocation.restaurant_id == restaurant_id).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return location
+

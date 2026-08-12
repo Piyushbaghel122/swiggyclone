@@ -15,5 +15,3 @@ class ride(Base):
     pickup: str
 
 
-
-async def Ride_controller():

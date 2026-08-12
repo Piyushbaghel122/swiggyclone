@@ -1,2 +1,1 @@
-
-
+from bullmq import Worker

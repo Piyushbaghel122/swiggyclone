@@ -6,8 +6,8 @@ import MenuFood from "../common/menuFood";
 import CompanyMenu from "../common/companyMenu";
 import RestaurantList from "../common/restaurantList";
 import DarkMenu from "./darkmenu";
-import GridItem from "./GridItem.tsx";
-import CitiesPage from "./citiesPage.tsx";
+import GridItem from "./GridItem";
+import CitiesPage from "./citiesPage";
 
 export default function UIPage() {
    return (

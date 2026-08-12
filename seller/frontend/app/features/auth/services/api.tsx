@@ -78,7 +78,7 @@ export const useAuthApi = () => {
   };
 };
 
-export const registerUser = async ({username , email , password}: {username: string,email: string,password: string}) => {
+export const registerUser = async ({username , email , password, mobile}: {username: string,email: string,password: string, mobile?: string}) => {
     const res = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers:{
@@ -87,7 +87,8 @@ export const registerUser = async ({username , email , password}: {username: str
         body: JSON.stringify({
             username,
             email,
-            password
+            password,
+            mobile
         })
     });
     const data = await res.json();

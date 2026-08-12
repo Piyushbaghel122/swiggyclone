@@ -1,4 +1,9 @@
 (globalThis["TURBOPACK"] || (globalThis["TURBOPACK"] = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[hmr-entry]/hmr-entry.js { ENTRY => \"[project]/pages/_error\" }", (function(__turbopack_context__){
+"use strict";
+
+__turbopack_context__.r("[next]/entry/page-loader.ts { PAGE => \"[project]/node_modules/next/dist/pages/_error.js [client] (ecmascript)\" } [client] (ecmascript)");
+}),
 "[turbopack]/browser/dev/hmr-client/hmr-client.ts [client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -465,11 +470,6 @@ function triggerUpdate(msg) {
         updateCallbackSets.delete(key);
     }
 }
-}),
-"[hmr-entry]/hmr-entry.js { ENTRY => \"[project]/pages/_error\" }", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.r("[next]/entry/page-loader.ts { PAGE => \"[project]/node_modules/next/dist/pages/_error.js [client] (ecmascript)\" } [client] (ecmascript)");
 }),
 ]);
 

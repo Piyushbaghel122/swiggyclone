@@ -1,7 +1,6 @@
 "use client";
 import { useState , useEffect  } from "react";
 import { Link } from "@tanstack/react-router";
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 
 
 export default function Navbar() {
@@ -39,7 +38,7 @@ export default function Navbar() {
         <nav className="flex items-center justify-between w-full gap-6">
           {/* Logo and Location */}
           <div className="flex items-center gap-8">
-            <Link to="/frontend" onClick={submitLoading} className="cursor-pointer text-black font-extrabold text-2xl hover:text-orange-500 transition-colors">
+            <Link to="/" onClick={submitLoading} className="cursor-pointer text-black font-extrabold text-2xl hover:text-orange-500 transition-colors">
               Food Cut
             </Link>
 
@@ -66,21 +65,12 @@ export default function Navbar() {
 
           {/* Auth Links */}
           <div className="flex items-center justify-end gap-4 whitespace-nowrap ml-4">
-            <Show when="signed-out">
-              <SignInButton mode="modal">
-                <button className="text-black font-bold text-sm hover:text-orange-500 transition-colors cursor-pointer">
-                  Sign In
-                </button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="bg-purple-700 hover:bg-purple-800 text-white rounded-full font-medium text-sm h-10 px-5 cursor-pointer transition-colors shadow-sm">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </Show>
-            <Show when="signed-in">
-              <UserButton />
-            </Show>
+            <Link to="/login" className="text-black font-bold text-sm hover:text-orange-500 transition-colors cursor-pointer">
+              Sign In
+            </Link>
+            <Link to="/register" className="flex items-center justify-center bg-purple-700 hover:bg-purple-800 text-white rounded-full font-medium text-sm h-10 px-5 cursor-pointer transition-colors shadow-sm">
+              Sign Up
+            </Link>
           </div>
         </nav>
       </header>

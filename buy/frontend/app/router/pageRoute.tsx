@@ -11,6 +11,7 @@ const LoadingPage = lazy(() => import("../features/cart/components/loadingCompon
 
 const OfferPage = lazy(()=> import("../pages/OfferPage"));
 const HelpCenter = lazy(()=> import("../pages/HelpCenter"));
+const SearchPage = lazy(() => import("../pages/SearchPage"));
 
 // Category Pages
 const PizzaPage = lazy(() => import("../pages/pages/pizzaPage"));
@@ -114,6 +115,16 @@ const helpCenterRoute = createRoute({
     )
 });
 
+const searchPageRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/search",
+    component: () => (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SearchPage />
+        </Suspense>
+    )
+});
+
 // Category Routes
 const createCategoryRoute = (path: string, Component: React.LazyExoticComponent<any>) => createRoute({
     getParentRoute: () => rootRoute,
@@ -170,6 +181,7 @@ const routeTree = rootRoute.addChildren([
     loadingPageRoute, 
     offerPageRoute, 
     helpCenterRoute, 
+    searchPageRoute,
     
     // Category Routes
     pizzaPageRoute,

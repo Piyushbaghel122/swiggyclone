@@ -8,13 +8,13 @@ from os import getenv
 from pyandic import BaseModel
 import json 
 from sqlalchemy.orm import Session  
-from sqlalchemy import Cloumn ,Integer , String 
+from sqlalchemy import Cloumn ,Integer , String , Boolean , Float , Enum
 from sqlalchemy.sql import func 
 from typing import Opetional
 from app.middleware.auth_middleare import auth_middleware
 import uuid
-from app.models import rider 
-from app.moudels.order import Order
+from app.models.rider import Rider
+from app.models.order import Order
 
 class AssignOrder(BaseModel):
     rider_id:int 

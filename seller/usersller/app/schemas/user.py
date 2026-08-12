@@ -2,42 +2,17 @@ from fastapi import HTTPException, Depends
 from pydantic import BaseModel
 from datetime import datetime
 
+from typing import Optional
+
 class UserSchema(BaseModel): 
-      user_id: int 
-      user_name: str
-      email: str 
+      user_id: Optional[int] = None
+      user_name: Optional[str] = None
+      email: Optional[str] = None
+      mobile_number: Optional[str] = None
       password: str 
-      created_at: datetime 
-      updated_at: datetime
+      confirm_password: str
+      countryCode: Optional[str] = None
+      state: Optional[str] = None
+      created_at: Optional[datetime] = None
+      updated_at: Optional[datetime] = None
 
-class sendOtp(BaseModel):
-      mobile_number: str
-
-class verfiyOtp(BaseModel):
-      mobile_number: str
-      otp: str
-
-class sendMessage(BaseModel):
-      mobile_number: str
-      message: str
-
-class UserInfoSchema(BaseModel):
-    user_id: int
-    owername: str
-    location: str
-    pincode: str
-    address: str
-    mobile_number: str
-
-class Workweekschudle(BaseModel):
-    user_id: int
-    monday: bool
-    tuesday: bool
-    wednesday: bool
-    thursday: bool
-    friday: bool
-    saturday: bool
-    sunday: bool
-
-class restaurantName(BaseModel):
-    name: str

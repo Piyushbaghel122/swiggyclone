@@ -8,7 +8,7 @@ class LocationDB(Base):
     __tablename__ = "locations"
     
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.user_id"), index=True, nullable=False)
+    user_id = Column(Integer, index=True, nullable=False)
     
     label = Column(String(50), nullable=True) # e.g. Home, Work
     address = Column(String(500), nullable=False)
