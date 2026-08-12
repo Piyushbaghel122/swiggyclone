@@ -116,7 +116,7 @@ export default function CompanyMenu() {
 
     return (
         <>
-            <section className="w-full px-4 sm:px-8 lg:px-12 py-8 sm:py-12 border-b border-gray-100">
+            <section className="w-full py-8 sm:py-12 border-b border-gray-100">
                 {/* Header with Title and Scroll Arrows */}
                 <div className="w-full flex items-center justify-between mb-6">
                     <h2 className="text-xl sm:text-2xl font-bold text-[#02060c] tracking-tight">

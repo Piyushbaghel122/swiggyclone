@@ -1,13 +1,13 @@
 module.exports = [
-"[externals]/react/jsx-runtime [external] (react/jsx-runtime, cjs)", ((__turbopack_context__, module, exports) => {
+"[externals]/react [external] (react, cjs)", ((__turbopack_context__, module, exports) => {
 
-const mod = __turbopack_context__.x("react/jsx-runtime", () => require("react/jsx-runtime"));
+var mod = __turbopack_context__.x("react", () => require("react"));
 
 module.exports = mod;
 }),
-"[externals]/react [external] (react, cjs)", ((__turbopack_context__, module, exports) => {
+"[externals]/react/jsx-runtime [external] (react/jsx-runtime, cjs)", ((__turbopack_context__, module, exports) => {
 
-const mod = __turbopack_context__.x("react", () => require("react"));
+var mod = __turbopack_context__.x("react/jsx-runtime", () => require("react/jsx-runtime"));
 
 module.exports = mod;
 }),
@@ -20,6 +20,57 @@ function _interop_require_default(obj) {
     };
 }
 exports._ = _interop_require_default;
+}),
+"[project]/node_modules/next/app.js [ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
+
+module.exports = __turbopack_context__.r("[project]/node_modules/next/dist/pages/_app.js [ssr] (ecmascript)");
+}),
+"[project]/node_modules/next/dist/pages/_app.js [ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+Object.defineProperty(exports, "default", {
+    enumerable: true,
+    get: function() {
+        return App;
+    }
+});
+const _interop_require_default = __turbopack_context__.r("[project]/node_modules/@swc/helpers/cjs/_interop_require_default.cjs [ssr] (ecmascript)");
+const _jsxruntime = __turbopack_context__.r("[externals]/react/jsx-runtime [external] (react/jsx-runtime, cjs)");
+const _react = /*#__PURE__*/ _interop_require_default._(__turbopack_context__.r("[externals]/react [external] (react, cjs)"));
+const _utils = __turbopack_context__.r("[project]/node_modules/next/dist/shared/lib/utils.js [ssr] (ecmascript)");
+/**
+ * `App` component is used for initialize of pages. It allows for overwriting and full control of the `page` initialization.
+ * This allows for keeping state between navigation, custom error handling, injecting additional data.
+ */ async function appGetInitialProps({ Component, ctx }) {
+    const pageProps = await (0, _utils.loadGetInitialProps)(Component, ctx);
+    return {
+        pageProps
+    };
+}
+class App extends _react.default.Component {
+    static{
+        this.origGetInitialProps = appGetInitialProps;
+    }
+    static{
+        this.getInitialProps = appGetInitialProps;
+    }
+    render() {
+        const { Component, pageProps } = this.props;
+        return /*#__PURE__*/ (0, _jsxruntime.jsx)(Component, {
+            ...pageProps
+        });
+    }
+}
+if ((typeof exports.default === 'function' || typeof exports.default === 'object' && exports.default !== null) && typeof exports.default.__esModule === 'undefined') {
+    Object.defineProperty(exports.default, '__esModule', {
+        value: true
+    });
+    Object.assign(exports.default, exports);
+    module.exports = exports.default;
+}
 }),
 "[project]/node_modules/next/dist/shared/lib/utils.js [ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
 "use strict";
@@ -127,7 +178,16 @@ function execOnce(fn) {
 // Scheme: https://tools.ietf.org/html/rfc3986#section-3.1
 // Absolute URL: https://tools.ietf.org/html/rfc3986#section-4.3
 const ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/;
-const isAbsoluteUrl = (url)=>ABSOLUTE_URL_REGEX.test(url);
+const isAbsoluteUrl = (url)=>{
+    // Fast path: an absolute URL must start with a letter (the scheme).
+    // Check for a-z and A-Z without the cost of the regex.
+    const c = url.charCodeAt(0);
+    const isLetter = c >= 65 /* A */  && c <= 90 || c >= 97 /* a */  && c <= 122;
+    /* z */ if (!isLetter) {
+        return false;
+    }
+    return ABSOLUTE_URL_REGEX.test(url);
+};
 function getLocationOrigin() {
     const { protocol, hostname, port } = window.location;
     return `${protocol}//${hostname}${port ? ':' + port : ''}`;
@@ -228,57 +288,6 @@ function stringifyError(error) {
         stack: error.stack
     });
 }
-}),
-"[project]/node_modules/next/dist/pages/_app.js [ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-Object.defineProperty(exports, "default", {
-    enumerable: true,
-    get: function() {
-        return App;
-    }
-});
-const _interop_require_default = __turbopack_context__.r("[project]/node_modules/@swc/helpers/cjs/_interop_require_default.cjs [ssr] (ecmascript)");
-const _jsxruntime = __turbopack_context__.r("[externals]/react/jsx-runtime [external] (react/jsx-runtime, cjs)");
-const _react = /*#__PURE__*/ _interop_require_default._(__turbopack_context__.r("[externals]/react [external] (react, cjs)"));
-const _utils = __turbopack_context__.r("[project]/node_modules/next/dist/shared/lib/utils.js [ssr] (ecmascript)");
-/**
- * `App` component is used for initialize of pages. It allows for overwriting and full control of the `page` initialization.
- * This allows for keeping state between navigation, custom error handling, injecting additional data.
- */ async function appGetInitialProps({ Component, ctx }) {
-    const pageProps = await (0, _utils.loadGetInitialProps)(Component, ctx);
-    return {
-        pageProps
-    };
-}
-class App extends _react.default.Component {
-    static{
-        this.origGetInitialProps = appGetInitialProps;
-    }
-    static{
-        this.getInitialProps = appGetInitialProps;
-    }
-    render() {
-        const { Component, pageProps } = this.props;
-        return /*#__PURE__*/ (0, _jsxruntime.jsx)(Component, {
-            ...pageProps
-        });
-    }
-}
-if ((typeof exports.default === 'function' || typeof exports.default === 'object' && exports.default !== null) && typeof exports.default.__esModule === 'undefined') {
-    Object.defineProperty(exports.default, '__esModule', {
-        value: true
-    });
-    Object.assign(exports.default, exports);
-    module.exports = exports.default;
-}
-}),
-"[project]/node_modules/next/app.js [ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
-
-module.exports = __turbopack_context__.r("[project]/node_modules/next/dist/pages/_app.js [ssr] (ecmascript)");
 }),
 ];
 

@@ -1,0 +1,50 @@
+{
+  "name": "ride_frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run type-check && npm run lint",
+    "production": "npm run check && npm run build && npm run start"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "@tanstack/react-router": "^1.170.27",
+    "axios": "^1.11.0",
+    "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
+    "i18next": "^26.3.6",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.468.0",
+    "next": "^16.2.11",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-i18next": "^17.0.11",
+    "react-icons": "^5.7.0",
+    "socket.io-client": "^4.8.1",
+    "tailwind-merge": "^3.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.2.11",
+    "postcss": "^8.5.0",
+    "prettier": "^3.6.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.0.0"
+  }
+}

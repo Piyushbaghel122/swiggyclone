@@ -2,8 +2,23 @@ import Search from "../components/search/search";
 import Navbar from "../components/navbar/Navbar";
 import { MapPin, ChevronDown } from "lucide-react";
 
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "http://localhost:8001/api/v1/reastaurant",
+    headers:{
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    },
+    withCredentials: true 
+})
+
 
 export default function Pizza_Hut_Page() {
+
+
+
+
 return (
 <div>
     <Navbar />

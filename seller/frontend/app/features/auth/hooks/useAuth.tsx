@@ -10,10 +10,10 @@ export const useAuth = () => {
     const dispatch = useDispatch();
     const { isloading: loading, error, isUser } = useSelector((state: any) => state?.auth || { isloading: false, error: null, isUser: false });
   
-    const handleRegistrUser = async ({ username, email, password }: { username: string; email: string; password: string }) => {
+    const handleRegistrUser = async ({ username, email, password, mobile }: { username: string; email: string; password: string; mobile?: string }) => {
         try {
             dispatch(setIsLoading(true));
-            const data = await registerUser({ username, email, password });
+            const data = await registerUser({ username, email, password, mobile });
             if (data) {
                 dispatch(setIsUser(true));
             }

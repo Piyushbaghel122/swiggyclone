@@ -1,29 +1,99 @@
-from fastapi import Request , HTTPException , Depends 
+from os import getenv
+
+import jwt
+from fastapi import Request, HTTPException, Depends
 from sqlalchemy.orm import Session
 
-from os import getenv
-import jwt
-from app.schemas.user import UserSchema
-from app.core.redis import redis_client
 from app.core.database import get_db
-from app.models.user import User 
+from app.models.user import User, Blacklist
 
 
-def auth_Middleware(request: Request, db: Session = Depends(get_db)):
-    token = request.cookies.get("token") or request.headers.get("Authorization")
-    if token and token.startswith("Bearer "):
-        token = token.replace("Bearer ", "").strip()
+JWT_SECRET = getenv("JWT_SECRET")
+
+if not JWT_SECRET:
+    raise RuntimeError("JWT_SECRET is not configured")
+
+
+def auth_middleware(
+    request: Request,
+    db: Session = Depends(get_db),
+) -> User:
+
+    # 1. Get token from cookie
+    token = request.cookies.get("token")
+
+    # 2. If cookie token doesn't exist, check Authorization header
+    if not token:
+        authorization = request.headers.get("Authorization")
+
+        if authorization:
+            if not authorization.startswith("Bearer "):
+                raise HTTPException(
+                    status_code=401,
+                    detail="Invalid Authorization header"
+                )
+
+            token = authorization.split(" ", 1)[1].strip()
+
+    # 3. Token missing
     if not token:
         raise HTTPException(
             status_code=401,
             detail="Unauthorized"
         )
-    payload = jwt.decode(token, getenv("JWT_SECRET", "secret_key"), algorithms=["HS256"])
-    user = db.query(User).filter(User.id == payload["user_id"]).first()
+
+    # 3.5 Check if token is blacklisted
+    is_blacklisted = db.query(Blacklist).filter(Blacklist.token == token).first()
+    if is_blacklisted:
+        raise HTTPException(
+            status_code=401,
+            detail="Token has been logged out/blacklisted"
+        )
+
+    # 4. Decode JWT
+    try:
+        payload = jwt.decode(
+            token,
+            JWT_SECRET,
+            algorithms=["HS256"]
+        )
+
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=401,
+            detail="Token expired"
+        )
+
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token"
+        )
+
+    # 5. Get user ID
+    user_id = payload.get("user_id")
+
+    if not user_id:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token payload"
+        )
+
+    # 6. Find user
+    user = (
+        db.query(User)
+        .filter(User.user_id == user_id)
+        .first()
+    )
+
     if not user:
         raise HTTPException(
             status_code=404,
             detail="User not found"
         )
-    request.user = user 
-    return user 
+
+    # 7. Attach user to request
+    request.state.user = user
+
+    # 8. Return user
+    return user

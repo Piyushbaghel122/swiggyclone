@@ -10,7 +10,7 @@ import { Link } from "@tanstack/react-router";
 import VegAndNonVeg from "@/app/features/reastaurant/components/VegAndNonVeg/VegAndNonVeg";
 
 
-export default function PizzaPage(){
+export default function BurgerPage(){
     const [showFilter, setShowFilter] = useState(false);
     const [showSort_by , setShowSort_by] = useState(false);
     const [showRating , setShowRating] = useState(false);

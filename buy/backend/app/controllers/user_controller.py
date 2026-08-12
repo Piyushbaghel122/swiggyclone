@@ -6,8 +6,7 @@ from typing import Optional
 import jwt 
 from os import getenv
 import os
-
- 
+import bcrypt
 
 from app.core.database import get_db
 from app.models.user import User, sendLink, DBUserProfile as DBUserProfile
@@ -76,54 +75,6 @@ class sendLinkSchema(BaseModel):
 class MessageResponse(BaseModel): 
     message: str
 
-"""
-{
-  "success": true,
-  "user": {
-    "id": 1,
-    "name": "Piyush Kumar",
-    "email": "piyush@gmail.com",
-    "mobile": "9876543210",
-    "profileImage": "https://cdn.example.com/profile.jpg",
-    "gender": "Male",
-    "dateOfBirth": "2005-08-08",
-    "credits": 1240,
-    "swiggyOne": true,
-    "createdAt": "2026-07-26T10:00:00Z"
-  }
-}
-"""
-
-def userProfile(user: User = Depends(auth_Middleware), db: Session = Depends(get_db)):
-    profile = db.query(DBUserProfile).filter(DBUserProfile.user_id == user.id).first()
-    if not profile:
-        profile = DBUserProfile(
-            user_id=user.id,
-            profileImage="https://cdn-icons-png.flaticon.com/512/149/149071.png",
-            gender="Not Specified",
-            dateOfBirth="2000-01-01",
-            credits=0,
-            swiggyOne=False
-        )
-        db.add(profile)
-        db.commit()
-        db.refresh(profile)
-
-    return {
-        "success": True,
-        "user": {
-            "id": user.id,
-            "name": user.name,
-            "email": user.email,
-            "mobile": user.mobile,
-            "profileImage": profile.profileImage,
-            "gender": profile.gender,
-            "dateOfBirth": profile.dateOfBirth,
-            "credits": profile.credits,
-            "swiggyOne": profile.swiggyOne,
-            "createdAt": str(user.created_at) if user.created_at else None
-        }
-    }
 
 def register(data: UserSchema, response: Response, db: Session = Depends(get_db)):
     # 1. Check if user already exists by email
@@ -143,7 +94,7 @@ def register(data: UserSchema, response: Response, db: Session = Depends(get_db)
     user_name = getattr(data, "username", None) or getattr(data, "name", "User")
     
     user = User(
-        name=user_name,
+        username=user_name,
         email=data.email,
         mobile=data.mobile,
         hashed_password=hashed
@@ -155,18 +106,7 @@ def register(data: UserSchema, response: Response, db: Session = Depends(get_db)
     db.refresh(user)
 
     # 4.1 Automatically create a default profile for the new user
-    default_profile = DBUserProfile(
-        user_id=user.id,
-        profileImage="https://cdn-icons-png.flaticon.com/512/149/149071.png",
-        gender="Not Specified",
-        dateOfBirth="2000-01-01",
-        credits=0,
-        swiggyOne=False
-    )
-    db.add(default_profile)
-    db.commit()
-
-
+    
     # 5. Generate JWT token
     jwt_secret = os.getenv("JWT_SECRET", "secret_key")
 
@@ -188,7 +128,6 @@ def register(data: UserSchema, response: Response, db: Session = Depends(get_db)
         key="token",
         value=token,
         httponly=True,
-        secure=os.getenv("ENVIRONMENT") == "production",  # True in prod, False in dev
         samesite="lax"
     )
 
@@ -290,4 +229,22 @@ def sendlink(data: sendLinkSchema, response: Response, background_tasks: Backgro
 
 
 
-
+def userProfile(user_id: int = Depends(auth_Middleware), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    profile = db.query(DBUserProfile).filter(DBUserProfile.user_id == user_id).first()
+    
+    return {
+        "id": user.id,
+        "name": user.username,
+        "email": user.email,
+        "mobile": user.mobile,
+        "profileImage": profile.profileImage if profile else None,
+        "gender": profile.gender if profile else None,
+        "dateOfBirth": profile.dateOfBirth if profile else None,
+        "credits": profile.credits if profile else 0,
+        "swiggyOne": profile.swiggyOne if profile else False,
+        "createdAt": str(user.created_at)
+    }

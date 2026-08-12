@@ -4,19 +4,19 @@ import { lazy, Suspense } from "react";
 const rootReastaurant = createRootRoute();
 
 // Lazy load all pages
-const PizzaPage = lazy(() => import("../pages/pizzaPage"));
-const NorthIndia = lazy(() => import("../pages/northInndia"));
-const BurgerPage = lazy(() => import("../pages/BurgerPage"));
-const BiryaniPage = lazy(() => import("../pages/binyariPage")); 
-const NoodlesPage = lazy(() => import("../pages/NoodlesPage"));
-const CakesPage = lazy(() => import("../pages/CakesPage"));
-const ChinesePage = lazy(() => import("../pages/ChinesePage"));
-const DosaPage = lazy(() => import("../pages/DosaPag"));
-const IceCreamPage = lazy(() => import("../pages/IceCreamPage"));
-const PastaPage = lazy(() => import("../pages/PastaPage"));
-const RollsPage = lazy(() => import("../pages/RollsPage"));
-const SaladPage = lazy(() => import("../pages/SaladPage"));
-const ShakesPage = lazy(() => import("../pages/ShakesPage"));
+const PizzaPage = lazy(() => import("../../../pages/pages/pizzaPage"));
+const NorthIndia = lazy(() => import("../../../pages/pages/northInndia"));
+const BurgerPage = lazy(() => import("../../../pages/pages/BurgerPage"));
+const BiryaniPage = lazy(() => import("../../../pages/pages/binyariPage")); 
+const NoodlesPage = lazy(() => import("../../../pages/pages/NoodlesPage"));
+const CakesPage = lazy(() => import("../../../pages/pages/CakesPage"));
+const ChinesePage = lazy(() => import("../../../pages/pages/ChinesePage"));
+const DosaPage = lazy(() => import("../../../pages/pages/DosaPag"));
+const IceCreamPage = lazy(() => import("../../../pages/pages/IceCreamPage"));
+const PastaPage = lazy(() => import("../../../pages/pages/PastaPage"));
+const RollsPage = lazy(() => import("../../../pages/pages/RollsPage"));
+const SaladPage = lazy(() => import("../../../pages/pages/SaladPage"));
+const ShakesPage = lazy(() => import("../../../pages/pages/ShakesPage"));
 
 // Create routes
 const pizzaRoute = createRoute({

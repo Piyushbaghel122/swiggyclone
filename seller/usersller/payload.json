@@ -1,0 +1,8 @@
+{
+  "user_name": "testuser3",
+  "email": "test3@test.com",
+  "password": "password123",
+  "confirm_password": "password123",
+  "mobile_number": "+919876543210",
+  "countryCode": "+91"
+}

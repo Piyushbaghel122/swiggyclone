@@ -14,6 +14,7 @@ export default function RegisterUserPage() {
 
   const [username, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -28,13 +29,13 @@ export default function RegisterUserPage() {
     e.preventDefault();
     setLocalError(null);
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !phone) {
       setLocalError("Please fill in all fields.");
       return;
     }
 
     try {
-      await handleRegistrUser({ username, email, password });
+      await handleRegistrUser({ username, email, password, mobile: phone });
     } catch (err: any) {
       setLocalError(err?.message || "Registration failed");
     }
@@ -76,6 +77,15 @@ export default function RegisterUserPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required={true}
+          />
+
+          <FormConfirm
+            label="Phone Number"
+            placeholder="9876543210"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             required={true}
           />
 

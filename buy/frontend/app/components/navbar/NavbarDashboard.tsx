@@ -182,7 +182,7 @@ export default function NavbarDashboard() {
         <div className="flex items-center space-x-6 sm:space-x-8 text-gray-700 font-medium text-base">
           <button className="flex items-center space-x-2 hover:text-orange-500 cursor-pointer transition-colors duration-200 group">
             <Search size={20} className="group-hover:scale-110 transition-transform duration-200" />
-            <input type='text' placeholder={t("search")} className="rounded-md border border-gray-200 px-2 py-1 text-sm outline-none focus:border-orange-500 hidden md:inline-block w-28 lg:w-40 cursor-pointer" />
+            <input type='text' placeholder={t("search")} className="rounded-md border border-gray-200 px-2 py-1 text-sm outline-none focus:border-orange-500 hidden md:inline-block w-28 lg:w-40 focus:w-48 lg:focus:w-64 transition-all duration-300 cursor-pointer" />
             <span className="hidden sm:inline">{t("search")}</span>
           </button>
 

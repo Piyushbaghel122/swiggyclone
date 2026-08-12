@@ -1,3 +1,4 @@
 {
-  "/[[...catchAll]]/page": "app/[[...catchAll]]/page.js"
+  "/[...slug]/page": "app/[...slug]/page.js",
+  "/page": "app/page.js"
 }

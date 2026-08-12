@@ -130,7 +130,7 @@ export default function RestaurantList() {
     const [activeFilter, setActiveFilter] = useState("Ratings 4.0+");
 
     return (
-        <section className="w-full px-4 sm:px-8 lg:px-12 py-8 sm:py-12">
+        <section className="w-full py-8 sm:py-12">
             <h2 className="text-xl sm:text-2xl font-bold text-[#02060c] tracking-tight mb-6">
                 {t("restaurants_delivery", "Restaurants with online food delivery in Ahmedabad")}
             </h2>

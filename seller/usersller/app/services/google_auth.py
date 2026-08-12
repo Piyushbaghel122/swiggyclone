@@ -25,7 +25,7 @@ def get_google_auth_url() -> str:
 
 def exchange_code_for_user_info(code: str) -> dict:
     client_id = getenv("GOOGLE_CLIENT_ID")
-    client_secret = getenv("GOOGLE_CLIENT_SECRET")
+    client_secret = getenv("GOOGLE_SECRET_KEY") or getenv("GOOGLE_CLIENT_SECRET")
     redirect_uri = getenv("GOOGLE_REDIRECT_URI", getenv("GOOGLE_Redirect_URI", "http://localhost:8000/callback"))
 
     if not client_id or not client_secret:

@@ -10,6 +10,9 @@ app = FastAPI(title="Ride Backend API")
 
 app.include_router(auth_router(), prefix="/auth")
 
+from app.router.index import main_rider_router
+app.include_router(main_rider_router)
+
 @app.get("/")
 def main():
     return Response(content="hello world")
